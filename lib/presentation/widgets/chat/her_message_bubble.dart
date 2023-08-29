@@ -33,9 +33,19 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.network(
-            "https://cdn131.picsart.com/350496690090201.jpg",
-            width: screen_size.width * 0.7,
-            height: 150,
-            fit: BoxFit.cover));
+          "https://cdn131.picsart.com/350496690090201.jpg",
+          width: screen_size.width * 0.7,
+          height: 150,
+          fit: BoxFit.cover,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Container(
+              width: screen_size.width * 0.7,
+              height: 150,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: const Text('Enviando una imagen'),
+            );
+          },
+        ));
   }
 }
