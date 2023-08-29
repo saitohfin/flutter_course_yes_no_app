@@ -5,29 +5,40 @@ class MessageFieldBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+
+    final textController = TextEditingController();
+final focusNode = FocusNode();
+
     final outlineInputBorder = UnderlineInputBorder(
         borderSide: const BorderSide(color: Colors.transparent),
         borderRadius: BorderRadius.circular(40));
 
     var inputDecoration = InputDecoration(
+      hintText: 'End your messagge with a "??"',
         enabledBorder: outlineInputBorder,
         focusedBorder: outlineInputBorder,
         filled: true,
         suffixIcon: IconButton(
           icon: const Icon(Icons.send_and_archive_outlined),
           onPressed: () {
-            print("huha");
+            final textValue = textController.value.text;
+            print("$textValue");
+            textController.clear();
+            focusNode.requestFocus();
           },
         ));
 
     return TextFormField(
+      controller: textController,
+      focusNode: focusNode,
       decoration: inputDecoration,
       onFieldSubmitted: (value) {
         print('Submit value $value');
+        textController.clear();
+        focusNode.requestFocus();
       },
-      onChanged: (value) {
-        print('Changed $value');
+      onTapOutside: (event) {
+        focusNode.unfocus();
       },
     );
   }
