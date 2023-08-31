@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HerMessageBubble extends StatelessWidget {
-  final String message;
+import '../../../domain/entities/message.dart';
 
-  const HerMessageBubble({super.key, required String this.message});
+class HerMessageBubble extends StatelessWidget {
+  final Message message;
+
+  const HerMessageBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,11 @@ class HerMessageBubble extends StatelessWidget {
               color: colors.secondary, borderRadius: BorderRadius.circular(20)),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(message, style: const TextStyle(color: Colors.white)),
+            child: Text(message.text, style: const TextStyle(color: Colors.white)),
           ),
         ),
         const SizedBox(height: 5),
-        _ImageBubble(),
+        _ImageBubble(imageUrl: message.imageUrl ?? "https://cdn131.picsart.com/350496690090201.jpg"),
         const SizedBox(height: 10)
       ],
     );
@@ -28,6 +30,11 @@ class HerMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
+
+  final String imageUrl;
+
+  const _ImageBubble({required this.imageUrl});
+
   @override
   Widget build(BuildContext context) {
     final screen_size = MediaQuery.of(context).size;
@@ -35,7 +42,7 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.network(
-          "https://cdn131.picsart.com/350496690090201.jpg",
+          imageUrl,
           width: screen_size.width * 0.7,
           height: 150,
           fit: BoxFit.cover,
